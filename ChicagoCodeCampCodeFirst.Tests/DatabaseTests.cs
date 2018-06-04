@@ -44,6 +44,65 @@ namespace ChicagoCodeCampCodeFirst.Tests
         }
 
         [Fact]
+        public async Task TestLocalDbSetChanges()
+        {
+            Guid studentId;
+
+            using (var scope = _fixture.ServiceProvider.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<UniversityDbContext>();
+
+                var studentToAdd = new Student
+                {
+                    BirthDate = new DateTime(1990, 1, 1),
+                    ExpectedGraduationYear = 2008,
+                    FirstName = "Update",
+                    LastName = "Test",
+                    LastChangedByUser = "test",
+                    LastChangedTimestamp = DateTimeOffset.UtcNow
+                };
+
+                await dbContext.Students.AddAsync(studentToAdd);
+
+                await dbContext.SaveChangesAsync();
+
+                studentId = studentToAdd.Id;
+            }
+
+            var testContext = _fixture.ServiceProvider.GetService<UniversityDbContext>();
+
+            var existingStudent = await testContext.Students.FindAsync(studentId);
+
+            Assert.NotNull(existingStudent);
+
+            var studentByName = testContext.Students.Single(s => s.FirstName == "Update" && s.LastName == "Test");
+
+            Assert.Equal(studentId, studentByName.Id);
+
+            studentByName.FirstName = "Local";
+
+            var studentNotFound = testContext.Students.SingleOrDefault(s => s.FirstName == "Local" && s.Id == studentId);
+
+            Assert.Null(studentNotFound);
+
+            var studentFoundinLocal = testContext.Students.Local.SingleOrDefault(s => s.FirstName == "Local" && s.Id == studentId);
+
+            Assert.NotNull(studentFoundinLocal);
+
+            Assert.Equal(studentFoundinLocal.Id, studentByName.Id);
+
+            await testContext.SaveChangesAsync();
+
+            var studentFoundAfterSave = testContext.Students.SingleOrDefault(s => s.FirstName == "Local" && s.Id == studentId);
+
+            Assert.NotNull(studentFoundAfterSave);
+
+
+
+
+        }
+
+        [Fact]
         public async Task TestSoftDeletion()
         {
             var studentId = Guid.NewGuid();

@@ -46,9 +46,9 @@ namespace ChicagoCodeCampCodeFirst.Tests
 
             var args = new UniversityDbArguments
             {
-                //ConnectionString = $"Server=(localdb)\\mssqllocaldb;Database={typeof(T)}_University;Trusted_Connection=True;MultipleActiveResultSets=true",
+                ConnectionString = $"Server=(localdb)\\mssqllocaldb;Database={typeof(T)}_University;Trusted_Connection=True;MultipleActiveResultSets=true",
                 //DemoConstant file is not checked in and will never be. Either create your own or use the line above to run
-                ConnectionString = $"Server={DemoConstant.DatabaseConnection};Database={typeof(T)}_University;User Id={DemoConstant.UserName};Password={DemoConstant.Password};MultipleActiveResultSets=true;",
+                //ConnectionString = $"Server={DemoConstant.DatabaseConnection};Database={typeof(T)}_University;User Id={DemoConstant.UserName};Password={DemoConstant.Password};MultipleActiveResultSets=true;",
                 CreateDbIfNotFound = true
             };
 
