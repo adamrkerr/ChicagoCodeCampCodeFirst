@@ -30,6 +30,8 @@ namespace ChicagoCodeCampCodeFirst.Context
 
         public DbSet<Department> Departments { get; set; }
 
+        public DbSet<StudentGPA> StudentGPAs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Course>()
@@ -57,6 +59,10 @@ namespace ChicagoCodeCampCodeFirst.Context
             modelBuilder.Entity<Department>()
                 .Property(d => d.Id)
                 .ValueGeneratedNever();
+
+            modelBuilder.Entity<StudentGPA>()
+                .HasKey(s => s.Id);
+                
 
             ApplyCommonStructure(modelBuilder);
 

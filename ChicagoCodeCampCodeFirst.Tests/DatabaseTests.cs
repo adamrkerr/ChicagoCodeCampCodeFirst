@@ -96,10 +96,6 @@ namespace ChicagoCodeCampCodeFirst.Tests
             var studentFoundAfterSave = testContext.Students.SingleOrDefault(s => s.FirstName == "Local" && s.Id == studentId);
 
             Assert.NotNull(studentFoundAfterSave);
-
-
-
-
         }
 
         [Fact]
@@ -288,6 +284,16 @@ namespace ChicagoCodeCampCodeFirst.Tests
                 Assert.NotNull(summary);
 
                 Assert.Equal(1000, summary.NumberStudentsEnrolled);
+            }
+
+            //now, test the view
+            using (var scope = _fixture.ServiceProvider.CreateScope())
+            {
+                var context = _fixture.ServiceProvider.GetRequiredService<UniversityDbContext>();
+
+                var gpas = context.StudentGPAs.ToList();
+
+                Assert.True(gpas.Count >= 1000);
             }
 
             //BURN IT DOWN!!!!!

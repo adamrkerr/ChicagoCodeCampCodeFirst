@@ -14,7 +14,5 @@ namespace ChicagoCodeCampCodeFirst.Context
         public int ExpectedGraduationYear { get; set; }
 
         public IList<CourseEnrollment> EnrolledCourses { get; set; }
-
-        public string Foo { get; set; }
     }
 }
