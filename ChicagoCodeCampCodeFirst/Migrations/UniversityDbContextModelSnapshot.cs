@@ -202,7 +202,7 @@ namespace ChicagoCodeCampCodeFirst.Migrations
 
                     b.Property<int>("CoursesEnrolled");
 
-                    b.Property<decimal>("GPA");
+                    b.Property<decimal?>("GPA");
 
                     b.HasKey("Id");
 

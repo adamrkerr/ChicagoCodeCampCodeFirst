@@ -11,7 +11,7 @@ using System;
 namespace ChicagoCodeCampCodeFirst.Migrations
 {
     [DbContext(typeof(UniversityDbContext))]
-    [Migration("20180607011251_gpa_view")]
+    [Migration("20180607013600_gpa_view")]
     partial class gpa_view
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -203,7 +203,7 @@ namespace ChicagoCodeCampCodeFirst.Migrations
 
                     b.Property<int>("CoursesEnrolled");
 
-                    b.Property<decimal>("GPA");
+                    b.Property<decimal?>("GPA");
 
                     b.HasKey("Id");
 
